@@ -1,0 +1,21 @@
+services:
+  google_calendar_mcp:
+    container_name: google_calendar_mcp
+    build:
+      context: .
+    image: google_calendar_mcp:latest
+    restart: always
+    volumes:
+      - ./.clients:/clients
+    environment:
+      - PYTHONPATH=/src
+      - FORWARDED_ALLOW_IPS=*
+      - CLIENTS_PATH=/clients
+    env_file:
+      - .env
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"

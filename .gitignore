@@ -1,0 +1,12 @@
+# editors
+/.idea
+
+# environment
+.venv
+.env
+
+# python
+__pycache__
+
+# data
+/.clients
