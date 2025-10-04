@@ -19,6 +19,7 @@ def decode_jwt(token):
         logger.info('Invalid JWT: %s', str(e))
     return None
 
+
 class GoogleServiceMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         authorization = request.headers.get('authorization')

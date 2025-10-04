@@ -5,7 +5,6 @@ from app import settings
 
 
 class RedisCache(AsyncCache):
-
     def __init__(self):
         self.redis = redis.from_url(settings.REDIS_URL)
 

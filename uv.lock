@@ -344,8 +344,8 @@ requires-dist = [
     { name = "google-api-python-client", specifier = ">=2.184.0" },
     { name = "google-auth", specifier = ">=2.41.1" },
     { name = "gunicorn", specifier = ">=23.0.0" },
-    { name = "jotsu-mcp", specifier = ">=0.14.0" },
-    { name = "mcp", specifier = ">=1.15.0" },
+    { name = "jotsu-mcp", specifier = ">=0.15.0" },
+    { name = "mcp", specifier = ">=1.16.0" },
     { name = "python-dateutil", specifier = ">=2.9.0.post0" },
     { name = "python-dotenv", specifier = ">=1.1.1" },
     { name = "redis", specifier = ">=6.4.0" },
@@ -450,7 +450,7 @@ wheels = [
 
 [[package]]
 name = "jotsu-mcp"
-version = "0.14.0"
+version = "0.15.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "asteval" },
@@ -462,9 +462,9 @@ dependencies = [
     { name = "pyjwt" },
     { name = "python-ulid" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6b/de/d1109727976d5d86bb6e4e645ca0b9f16cde29da605c2dc24062d871c189/jotsu_mcp-0.14.0.tar.gz", hash = "sha256:46a8c4303e2d7f0768deec049e4842f8ed6c9ad4e383a758f22827ec3c90b43a", size = 38410, upload-time = "2025-10-03T16:25:22.415Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d7/b9/842a674696aa8d3e97ce18e541c5caf38b55acd2d60877d81c82df4e4d44/jotsu_mcp-0.15.0.tar.gz", hash = "sha256:8f13cf68b43928a918e68ad77f1b18069e6f013ea87f70c6b4f0034030fb64db", size = 38744, upload-time = "2025-10-04T16:57:35.401Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6e/49/b8251dd338f4e1b814433ecb4e91c11645f208994ad0938fe46161e47a5f/jotsu_mcp-0.14.0-py3-none-any.whl", hash = "sha256:1596dea720115ce92c0c94bc78942582800451e4098689194fc2beb0d3d780f1", size = 51331, upload-time = "2025-10-03T16:25:21.114Z" },
+    { url = "https://files.pythonhosted.org/packages/aa/e2/b67cfc735ed6371a327b54f69439984a80864d0d3595f8e3fb75b2a03d72/jotsu_mcp-0.15.0-py3-none-any.whl", hash = "sha256:6dc6475fec7a505dc2a0267c033455ec553c57f84672b34632974fa824d78b5f", size = 51507, upload-time = "2025-10-04T16:57:34.167Z" },
 ]
 
 [[package]]
@@ -505,7 +505,7 @@ wheels = [
 
 [[package]]
 name = "mcp"
-version = "1.15.0"
+version = "1.16.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
@@ -520,9 +520,9 @@ dependencies = [
     { name = "starlette" },
     { name = "uvicorn", marker = "sys_platform != 'emscripten'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/0c/9e/e65114795f359f314d7061f4fcb50dfe60026b01b52ad0b986b4631bf8bb/mcp-1.15.0.tar.gz", hash = "sha256:5bda1f4d383cf539d3c035b3505a3de94b20dbd7e4e8b4bd071e14634eeb2d72", size = 469622, upload-time = "2025-09-25T15:39:51.995Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/3d/a1/b1f328da3b153683d2ec34f849b4b6eac2790fb240e3aef06ff2fab3df9d/mcp-1.16.0.tar.gz", hash = "sha256:39b8ca25460c578ee2cdad33feeea122694cfdf73eef58bee76c42f6ef0589df", size = 472918, upload-time = "2025-10-02T16:58:20.631Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c9/82/4d0df23d5ff5bb982a59ad597bc7cb9920f2650278ccefb8e0d85c5ce3d4/mcp-1.15.0-py3-none-any.whl", hash = "sha256:314614c8addc67b663d6c3e4054db0a5c3dedc416c24ef8ce954e203fdc2333d", size = 166963, upload-time = "2025-09-25T15:39:50.538Z" },
+    { url = "https://files.pythonhosted.org/packages/c9/0e/7cebc88e17daf94ebe28c95633af595ccb2864dc2ee7abd75542d98495cc/mcp-1.16.0-py3-none-any.whl", hash = "sha256:ec917be9a5d31b09ba331e1768aa576e0af45470d657a0319996a20a57d7d633", size = 167266, upload-time = "2025-10-02T16:58:19.039Z" },
 ]
 
 [[package]]

@@ -10,26 +10,26 @@ from .utils import calendar_service, utcnow
 
 logger = logging.getLogger(__name__)
 
+
 @mcp.tool()
 async def list_calendars(ctx: Context):
-    """ Get information about all accessible calendars.
+    """Get information about all accessible calendars.
 
     Returns:
         An object containing 'calendars', a list of calendar details.
     """
     service = calendar_service(ctx)
     res = await run_in_threadpool(service.calendarList().list().execute)
-    return {
-        'calendars': res.get('items', [])
-    }
+    return {'calendars': res.get('items', [])}
+
 
 # noinspection PyIncorrectDocstring
 @mcp.tool()
 async def find_events(
-        ctx: Context,
-        calendar_id: str = 'primary',
-        time_min: datetime = None,
-        time_max: datetime = None
+    ctx: Context,
+    calendar_id: str = 'primary',
+    time_min: datetime = None,
+    time_max: datetime = None,
 ):
     """Get calendar events in the specified time range.
 
@@ -53,17 +53,16 @@ async def find_events(
         kwargs['timeMax'] = time_max.isoformat()
 
     res = await run_in_threadpool(service.events().list(**kwargs).execute)
-    return {
-        'events': res.get('items', [])
-    }
+    return {'events': res.get('items', [])}
+
 
 # noinspection PyIncorrectDocstring
 @mcp.tool()
 async def free_busy(
-        ctx: Context,
-        calendar_id: str = 'primary',
-        time_min: datetime = None,
-        time_max: datetime = None
+    ctx: Context,
+    calendar_id: str = 'primary',
+    time_min: datetime = None,
+    time_max: datetime = None,
 ):
     """Finds free/busy information for the given calendar.
 
@@ -88,25 +87,24 @@ async def free_busy(
         'calendarId': calendar_id,
         'timeMin': time_min.isoformat(),
         'timeMax': time_max.isoformat(),
-        'items': [{'id': calendar_id}]
+        'items': [{'id': calendar_id}],
     }
 
     res = await run_in_threadpool(service.freebusy().query(body=kwargs).execute)
-    return {
-        'busy': res.get('calendars', {}).get(calendar_id, {}).get('busy')
-    }
+    return {'busy': res.get('calendars', {}).get(calendar_id, {}).get('busy')}
+
 
 # noinspection PyIncorrectDocstring
 @mcp.tool()
 async def create_event(
-        ctx: Context,
-        summary: str,
-        start_time: str,
-        end_time: str,
-        calendar_id: str = 'primary',
-        description: typing.Optional[str] = None,
-        location: typing.Optional[str] = None,
-        attendees: typing.Optional[list[str]] = None,
+    ctx: Context,
+    summary: str,
+    start_time: str,
+    end_time: str,
+    calendar_id: str = 'primary',
+    description: typing.Optional[str] = None,
+    location: typing.Optional[str] = None,
+    attendees: typing.Optional[list[str]] = None,
 ):
     """
     Creates a new event.
@@ -123,6 +121,7 @@ async def create_event(
     Returns:
         str: Confirmation message of the successful event creation with event link.
     """
+
     def _date_param(value: str):
         return {'date': start_time} if 'T' not in value else {'dateTime': start_time}
 
@@ -131,7 +130,7 @@ async def create_event(
     body: typing.Dict[str, typing.Any] = {
         'summary': summary,
         'start': _date_param(start_time),
-        'end': _date_param(end_time)
+        'end': _date_param(end_time),
     }
 
     if location:
@@ -141,4 +140,6 @@ async def create_event(
     if attendees:
         body['attendees'] = [{'email': email} for email in attendees]
 
-    return await run_in_threadpool(service.events().insert(calendarId=calendar_id, body=body).execute)
+    return await run_in_threadpool(
+        service.events().insert(calendarId=calendar_id, body=body).execute
+    )
