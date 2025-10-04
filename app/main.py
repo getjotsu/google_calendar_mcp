@@ -61,12 +61,6 @@ app.add_middleware(
     expose_headers=["Mcp-Session-Id"],   # required by streamable HTTP clients
 )
 
-streamable_http_app = mcp.streamable_http_app()
-app.mount("/", streamable_http_app)
-streamable_http_app.add_route("/register", RegistrationHandler(mcp.auth_server_provider).handle, methods=["POST"])
-streamable_http_app.add_route("/redirect", RedirectHandler(mcp.auth_server_provider).handle, methods=["GET"])
-streamable_http_app.add_middleware(middleware.GoogleServiceMiddleware)
-
 @app.get("/.well_known/agent-card.json")
 async def agent_card():
     return {
@@ -78,3 +72,9 @@ async def agent_card():
             "registration_endpoint": f"{settings.EXTERNAL_URL}/register"
         }
     }
+
+streamable_http_app = mcp.streamable_http_app()
+app.mount("/", streamable_http_app)
+streamable_http_app.add_route("/register", RegistrationHandler(mcp.auth_server_provider).handle, methods=["POST"])
+streamable_http_app.add_route("/redirect", RedirectHandler(mcp.auth_server_provider).handle, methods=["GET"])
+streamable_http_app.add_middleware(middleware.GoogleServiceMiddleware)
