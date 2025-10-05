@@ -9,7 +9,7 @@ from mcp.server.auth.routes import build_metadata
 from mcp.server.auth.settings import AuthSettings, ClientRegistrationOptions, RevocationOptions
 from mcp.server.fastmcp import FastMCP
 
-from jotsu.mcp.server.routes import RegistrationHandler, RedirectHandler
+from jotsu.mcp.server.routes import StaticRegistrationHandler, RedirectHandler
 from jotsu.mcp.local.client_manager import LocalEncryptedClientManager
 
 from . import settings, middleware
@@ -85,7 +85,7 @@ async def agent_card():
         'id': settings.EXTERNAL_URL,
         'name': mcp.name,
         'issuer': settings.ISSUER_URL,
-        'capabilities': [RegistrationHandler.CAPABILITY],
+        'capabilities': [StaticRegistrationHandler.CAPABILITY],
         'endpoints': {
             'static_registration_endpoint': f'{settings.EXTERNAL_URL}/static_register'
         },
@@ -103,7 +103,7 @@ streamable_http_app = mcp.streamable_http_app()
 app.mount('/', streamable_http_app)
 streamable_http_app.add_route(
     '/static_register',
-    RegistrationHandler(mcp.auth_server_provider).handle,
+    StaticRegistrationHandler(mcp.auth_server_provider).handle,
     methods=['POST'],
 )
 streamable_http_app.add_route(

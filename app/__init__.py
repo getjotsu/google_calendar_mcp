@@ -1,3 +1,3 @@
-from . import tools
+from . import tools, resources
 
-__all__ = (tools,)
+__all__ = (tools, resources)

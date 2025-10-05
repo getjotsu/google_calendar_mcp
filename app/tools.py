@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from mcp.server.fastmcp import Context
 from starlette.concurrency import run_in_threadpool
 
+from . import models
 from .main import mcp
 from .utils import calendar_service, utcnow
 
@@ -12,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 @mcp.tool()
-async def list_calendars(ctx: Context):
+async def list_calendars(ctx: Context) -> models.ListCalendarsResponse:
     """Get information about all accessible calendars.
 
     Returns:
@@ -20,17 +21,16 @@ async def list_calendars(ctx: Context):
     """
     service = calendar_service(ctx)
     res = await run_in_threadpool(service.calendarList().list().execute)
-    return {'calendars': res.get('items', [])}
+    return models.ListCalendarsResponse(calendars=res.get('items', []))
 
 
-# noinspection PyIncorrectDocstring
 @mcp.tool()
 async def find_events(
     ctx: Context,
     calendar_id: str = 'primary',
     time_min: datetime = None,
     time_max: datetime = None,
-):
+) -> models.FindEventsResponse:
     """Get calendar events in the specified time range.
 
     Args:
@@ -53,21 +53,21 @@ async def find_events(
         kwargs['timeMax'] = time_max.isoformat()
 
     res = await run_in_threadpool(service.events().list(**kwargs).execute)
-    return {'events': res.get('items', [])}
+    return models.FindEventsResponse(events=res.get('items', []))
 
 
 # noinspection PyIncorrectDocstring
 @mcp.tool()
 async def free_busy(
     ctx: Context,
-    calendar_id: str = 'primary',
+    calendar_ids: typing.List[str] = None,
     time_min: datetime = None,
     time_max: datetime = None,
-):
+) -> models.FreeBusyResponse:
     """Finds free/busy information for the given calendar.
 
     Args:
-        calendar_id: Calendar identifier (usually the user email, default='primary').
+        calendar_ids: List of calendar identifiers .
         time_min: Start time range (inclusive).
         time_max: End time range (exclusive).
 
@@ -75,6 +75,7 @@ async def free_busy(
         An object containing 'busy', a list of event start and end times.
     """
     service = calendar_service(ctx)
+    calendar_ids = calendar_ids if calendar_ids else ['primary']
 
     if not time_min:
         time_min = utcnow()
@@ -84,14 +85,20 @@ async def free_busy(
         time_max = time_min + timedelta(days=7)
 
     kwargs = {
-        'calendarId': calendar_id,
         'timeMin': time_min.isoformat(),
         'timeMax': time_max.isoformat(),
-        'items': [{'id': calendar_id}],
+        'items': [{'id': calendar_id} for calendar_id in calendar_ids],
     }
 
     res = await run_in_threadpool(service.freebusy().query(body=kwargs).execute)
-    return {'busy': res.get('calendars', {}).get(calendar_id, {}).get('busy')}
+    print(res)
+
+    busy = []
+    for calendar_id, calendar in res.get('calendars', {}).items():
+        for item in calendar.get('busy', []):
+            busy.append(models.FreeBusy(start=item['start'], end=item['end'], calendar_id=calendar_id))
+
+    return models.FreeBusyResponse(busy=busy)
 
 
 # noinspection PyIncorrectDocstring
@@ -105,7 +112,8 @@ async def create_event(
     description: typing.Optional[str] = None,
     location: typing.Optional[str] = None,
     attendees: typing.Optional[list[str]] = None,
-):
+    transparency: typing.Optional[typing.Literal['opaque', 'transparent']] = 'opaque'
+) -> models.CreateEventResponse:
     """
     Creates a new event.
 
@@ -117,7 +125,7 @@ async def create_event(
         description (Optional[str]): Event description.
         location (Optional[str]): Event location.
         attendees (Optional[List[str]]): Attendee email addresses.
-
+        transparency ('opaque or 'transparent', default='opaque'): opaque marks the event as busy, transparent does not.
     Returns:
         str: Confirmation message of the successful event creation with event link.
     """
@@ -131,6 +139,7 @@ async def create_event(
         'summary': summary,
         'start': _date_param(start_time),
         'end': _date_param(end_time),
+        'transparency': transparency
     }
 
     if location:
@@ -140,6 +149,7 @@ async def create_event(
     if attendees:
         body['attendees'] = [{'email': email} for email in attendees]
 
-    return await run_in_threadpool(
+    res = await run_in_threadpool(
         service.events().insert(calendarId=calendar_id, body=body).execute
     )
+    return models.CreateEventResponse(**res)

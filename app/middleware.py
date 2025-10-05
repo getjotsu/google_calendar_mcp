@@ -33,3 +33,4 @@ class GoogleServiceMiddleware(BaseHTTPMiddleware):
         response = await call_next(request)
         request.state.service = None
         return response
+
