@@ -344,7 +344,7 @@ requires-dist = [
     { name = "google-api-python-client", specifier = ">=2.184.0" },
     { name = "google-auth", specifier = ">=2.41.1" },
     { name = "gunicorn", specifier = ">=23.0.0" },
-    { name = "jotsu-mcp", specifier = ">=0.15.0" },
+    { name = "jotsu-mcp", specifier = ">=0.16.0" },
     { name = "mcp", specifier = ">=1.16.0" },
     { name = "python-dateutil", specifier = ">=2.9.0.post0" },
     { name = "python-dotenv", specifier = ">=1.1.1" },
@@ -450,7 +450,7 @@ wheels = [
 
 [[package]]
 name = "jotsu-mcp"
-version = "0.15.0"
+version = "0.16.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "asteval" },
@@ -462,9 +462,9 @@ dependencies = [
     { name = "pyjwt" },
     { name = "python-ulid" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d7/b9/842a674696aa8d3e97ce18e541c5caf38b55acd2d60877d81c82df4e4d44/jotsu_mcp-0.15.0.tar.gz", hash = "sha256:8f13cf68b43928a918e68ad77f1b18069e6f013ea87f70c6b4f0034030fb64db", size = 38744, upload-time = "2025-10-04T16:57:35.401Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b5/68/d44ae73e72f271bc0b2ddf3842a19fb33dfb1b8ce917b67c6f3d320fdf64/jotsu_mcp-0.16.0.tar.gz", hash = "sha256:d727d65a03eccbaa39054acdd91c57376ad3879bdba6a1e235c816ae6b6a0d2d", size = 38850, upload-time = "2025-10-05T17:01:47.365Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/aa/e2/b67cfc735ed6371a327b54f69439984a80864d0d3595f8e3fb75b2a03d72/jotsu_mcp-0.15.0-py3-none-any.whl", hash = "sha256:6dc6475fec7a505dc2a0267c033455ec553c57f84672b34632974fa824d78b5f", size = 51507, upload-time = "2025-10-04T16:57:34.167Z" },
+    { url = "https://files.pythonhosted.org/packages/1b/23/465fdb72b4d308b7118416b330bfc40924f3e233513db5bfcd4431045b5d/jotsu_mcp-0.16.0-py3-none-any.whl", hash = "sha256:0d33ac7fc82806aa2323bb0a3af69a0be411eae90f3fe3eee22d7678f763dd2f", size = 51629, upload-time = "2025-10-05T17:01:46.169Z" },
 ]
 
 [[package]]
